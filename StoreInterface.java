@@ -1,5 +1,11 @@
 package OnlineShoppingSystem;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +29,7 @@ public class StoreInterface {
 				System.out.println("1. Register User");
 				System.out.println("2. Login");
 				System.out.println("3. Exit");
-				System.out.print("Please select an option (1-3): ");
+				System.out.print("\nPlease select an option (1-3): ");
 
 				int option = scanner.nextInt();
 				scanner.nextLine();
@@ -50,16 +56,128 @@ public class StoreInterface {
 			}
 		}
 	}
+	
+	private void loginUser() {
+		System.out.print("Enter username: ");
+		String username = scanner.nextLine();
+		System.out.print("Enter password: ");
+		String password = scanner.nextLine();
 
+		for (User user : store.getUsers()) {
+			if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+				currentUser = user;
+
+				System.out.println(user.getUserType() + " Logged in successfully. Welcome " + user.getName() + "!");
+
+				return;
+			}
+		}
+		System.out.println("Invalid username or password. Please try again.");
+	}
+
+//	private void loginUser() {
+//        System.out.print("Enter user type (admin/customer): ");
+//        String userType = scanner.nextLine();
+//        if (userType.equalsIgnoreCase("admin")) {
+//            System.out.print("Enter admin username: ");
+//            String adminUsername = scanner.nextLine();
+//            System.out.print("Enter admin password: ");
+//            String adminPassword = scanner.nextLine();
+//
+//            try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream("/Users/ussrasrestha1/Desktop/hello.txt")))){
+//                String fileUsername = fileReader.readLine();
+//                String filePassword = fileReader.readLine();
+//                
+//                    for (User user : store.getUsers()) {
+//                    	if (adminUsername.equals(fileUsername) && adminPassword.equals(filePassword)) {
+//                            currentUser = user;
+//                            System.out.println(user.getUserType() + " logged in successfully. Welcome " + user.getName() + "!");
+//                            return;
+//                        } else {
+//                    System.out.println("Invalid admin credentials.");
+//                }
+//            }
+//            }catch (IOException e) {
+//                System.out.println("Error reading credentials file.");
+//            }
+//        } else {
+//            System.out.print("Enter username: ");
+//            String username = scanner.nextLine();
+//            System.out.print("Enter password: ");
+//            String password = scanner.nextLine();
+//
+//            for (User user : store.getUsers()) {
+//                if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+//                    currentUser = user;
+//                    System.out.println(user.getUserType() + " logged in successfully. Welcome " + user.getName() + "!");
+//                    return;
+//                }else {
+//                	System.out.println("Invalid username or password. Please try again.");
+//                }
+//            }
+//            
+//        }
+//    }
+
+//    private void loginUser() {
+//        System.out.print("Enter user type (admin/customer): ");
+//        String userType = scanner.nextLine();
+//
+//        if (userType.equalsIgnoreCase("admin")) {
+//            System.out.print("Enter admin username: ");
+//            String adminUsername = scanner.nextLine();
+//            System.out.print("Enter admin password: ");
+//            String adminPassword = scanner.nextLine();
+//
+//            if (validateAdminCredentials(adminUsername, adminPassword)) {
+//                for (User user : store.getUsers()) {
+//                    if (user.getUserName().equals(adminUsername) && user.getUserType().equalsIgnoreCase("admin")) {
+//                        currentUser = user;
+//                        System.out.println(user.getUserType() + " logged in successfully. Welcome " + user.getName() + "!");
+//                        return;
+//                    }
+//                }
+//            } else {
+//                System.out.println("Invalid admin credentials.");
+//            }
+//        } else {
+//            System.out.print("Enter username: ");
+//            String username = scanner.nextLine();
+//            System.out.print("Enter password: ");
+//            String password = scanner.nextLine();
+//
+//            for (User user : store.getUsers()) {
+//                if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
+//                    currentUser = user;
+//                    System.out.println(user.getUserType() + " logged in successfully. Welcome " + user.getName() + "!");
+//                    return;
+//                }
+//            }
+//            System.out.println("Invalid username or password. Please try again.");
+//        }
+//    }
+//
+//    private boolean validateAdminCredentials(String username, String password) {
+//        try (BufferedReader br = new BufferedReader(new FileReader("/Users/ussrasrestha1/Desktop/hello.txt"))) {
+//            String fileUsername = br.readLine();
+//            String filePassword = br.readLine();
+//            return username.equals(fileUsername) && password.equals(filePassword);
+//        } catch (IOException e) {
+//            System.out.println("Error reading credentials file.");
+//            return false;
+//        }
+//    }
 	private void showAdminMenu() {
 		while (currentUser != null) {
 			System.out.println("Admin Menu:");
+			System.out.println("------------");
 			System.out.println("1. Add Product");
-			System.out.println("2. Update Product");
-			System.out.println("3. Remove Product");
-			System.out.println("4. Generate Reports");
-			System.out.println("5. Logout");
-			System.out.print("Please select an option (1-5): ");
+			System.out.println("2. Search Products");
+			System.out.println("3. Update Product");
+			System.out.println("4. Remove Product");
+			System.out.println("5. Generate Reports");
+			System.out.println("6. Logout");
+			System.out.print("\nPlease select an option (1-5): ");
 
 			int option = scanner.nextInt();
 			scanner.nextLine();
@@ -69,15 +187,18 @@ public class StoreInterface {
 				addProduct();
 				break;
 			case 2:
-				updateProduct();
+				searchProducts();
 				break;
 			case 3:
-				removeProduct();
+				updateProduct();
 				break;
 			case 4:
-				generateReports();
+				removeProduct();
 				break;
 			case 5:
+				generateReports();
+				break;
+			case 6:
 				currentUser = null;
 				System.out.println("Logged out successfully.");
 				break;
@@ -90,11 +211,12 @@ public class StoreInterface {
 	private void showCustomerMenu() {
 		while (currentUser != null) {
 			System.out.println("Customer Menu:");
+			System.out.println("---------------\n");
 			System.out.println("1. Search Product");
 			System.out.println("2. Place Order");
 			System.out.println("3. Return Order");
 			System.out.println("4. Logout");
-			System.out.print("Please select an option (1-4): ");
+			System.out.print("\nPlease select an option (1-4): ");
 
 			int option = scanner.nextInt();
 			scanner.nextLine();
@@ -119,24 +241,8 @@ public class StoreInterface {
 		}
 	}
 
-	private void loginUser() {
-		System.out.print("Enter username: ");
-		String username = scanner.nextLine();
-		System.out.print("Enter password: ");
-		String password = scanner.nextLine();
-
-		for (User user : store.getUsers()) {
-			if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
-				currentUser = user;
-				System.out.println("Login successful. Welcome " + username + "!");
-				return;
-			}
-		}
-		System.out.println("Invalid username or password. Please try again.");
-	}
-
 	private void addUser() {
-		System.out.print("Enter name: ");
+		System.out.print("Enter full name: ");
 		String name = scanner.nextLine();
 		System.out.print("Enter username: ");
 		String username = scanner.nextLine();
@@ -146,7 +252,7 @@ public class StoreInterface {
 		String userType = scanner.nextLine();
 
 		store.addUser(name, username, password, userType);
-		System.out.println("User added successfully.");
+		System.out.println(userType + " registered successfully.");
 	}
 
 	private void addProduct() {
@@ -213,12 +319,25 @@ public class StoreInterface {
 		case 3:
 			System.out.print("Enter product ID: ");
 			int productId = scanner.nextInt();
-			results = store.searchProductsById(productId);
+			scanner.nextLine(); // Consume the newline character left by nextInt()
+			System.out.print("Enter User Type: ");
+			String userType = scanner.nextLine();
+			List<Product> results1 = store.searchProductsById(productId, userType);
+
+			// Display the results
+			if (results1.isEmpty() && userType.equalsIgnoreCase("admin")) {
+				System.out.println("No products found in the list.");
+			} else {
+				for (Product product : results1) {
+					System.out.println(product);
+				}
+			}
 			break;
+
 		case 4:
 			System.out.print("Enter product category: ");
 			String productCategory = scanner.nextLine();
-			results = store.searchProductsByCategory(productCategory);
+			results1 = store.searchProductsByCategory(productCategory);
 			break;
 		default:
 			System.out.println("Invalid option. Please try again.");
@@ -315,7 +434,13 @@ public class StoreInterface {
 
 		switch (option) {
 		case 1:
-			store.generateInventoryReport();
+			try {
+				store.generateInventoryReport();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			break;
 		case 2:
 			store.generateSalesReport();
