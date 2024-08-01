@@ -1,7 +1,12 @@
 package OnlineShoppingSystem;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Store {
 
@@ -40,9 +45,9 @@ public class Store {
 
 	public void addUser(String name, String userName, String password, String userType) {
 		if (userType.equalsIgnoreCase("admin")) {
-			users.add(new Admin(name, userName, password));
+			users.add(new Admin(name, userName, password, userType));
 		} else {
-			users.add(new Customer(name, userName, password));
+			users.add(new Customer(name, userName, password, userType));
 		}
 	}
 
@@ -68,22 +73,31 @@ public class Store {
 	public List<Product> searchProductsByPrice(double productPrice) {
 		List<Product> result = new ArrayList<>();
 		for (Product product : products) {
-			if (product.getProductPrice() == productPrice) {
+			if (product.getProductPrice() <= productPrice) {
 				result.add(product);
 			}
 		}
 		return result;
 	}
 
-	public List<Product> searchProductsById(int productId) {
-		List<Product> result = new ArrayList<>();
-		for (Product product : products) {
-			if (product.getProductId() == productId) {
-				result.add(product);
-			}
-		}
-		return result;
+	public List<Product> searchProductsById(int productId, String userType) {
+	    List<Product> result = new ArrayList<>();
+	    
+	    if ("admin".equalsIgnoreCase(userType)) {
+	        for (Product product : products) {
+	            if (product.getProductId() == productId) {
+	                result.add(product);
+	            }
+	        }
+	    } else {
+	        // Optionally, you can throw an exception or return an empty list if the user is not an admin
+	        // throw new IllegalArgumentException("Only admins can search products by ID.");
+	        System.out.println("Only admins can search products by ID.");
+	    }
+	    
+	    return result;
 	}
+
 
 	public List<Product> searchProductsByCategory(String productCategory) {
 		List<Product> result = new ArrayList<>();
@@ -122,20 +136,49 @@ public class Store {
 			System.out.println("Product with ID " + id + " is not available!");
 		}
 	}
+	
+	Scanner scanner = new Scanner(System.in);
 
 	// Report generation
-	public void generateInventoryReport() {
+	public void generateInventoryReport() throws FileNotFoundException, IOException {
+        // Prompt for output file path
+        System.out.print("Enter the path to save 'result.txt': ");
+        String outputFilePath = scanner.nextLine();
+        
 		System.out.println("Inventory Report:");
+		int count = 1;
 		for (Product product : products) {
-			System.out.println(product);
+	        // Write result to a file
+	        try (PrintWriter fileWriter = new PrintWriter(new FileWriter(outputFilePath + "/Inventroy Report.txt"))) {
+	        	System.out.println("\nInventory Report Generating....\n");
+	            fileWriter.print(count + ". " + product);
+	            count++;
+	            //System.out.println(product);
+	        } catch (IOException e) {
+	            System.out.println("Error during file writing: " + e.getMessage());
+	        }
+	        System.out.println("\nReport saved in 'Inventroy Report.txt'");
 		}
 	}
 
 	// Method to generate sales report
 	public void generateSalesReport() {
+		// Prompt for output file path
+        System.out.print("Enter the path to save 'Sales Report.txt': ");
+        String outputFilePath = scanner.nextLine();
+        
 		System.out.println("Sales Report:");
+		int count = 1;
 		for (Order order : orders) {
-			System.out.println(order);
+			// Write result to a file
+	        try (PrintWriter fileWriter = new PrintWriter(new FileWriter(outputFilePath + "/Sales Report.txt"))) {
+	        	System.out.println("\nSales Report Generating....\n");
+	            fileWriter.print(count + ". " + order);
+	            //System.out.println(order);
+	        } catch (IOException e) {
+	            System.out.println("Error during file writing: " + e.getMessage());
+	        }
+	        System.out.println("\nReport saved in 'Sales Report.txt'\n");
 		}
 	}
 
