@@ -6,12 +6,14 @@ public abstract class User {
 	private String name;
 	private String userName;
 	private String password;
+	private String userType;
 
 	// Constructor
-	public User(String name, String userName, String password) {
+	public User(String name, String userName, String password, String userType) {
 		this.name = name;
 		this.userName = userName;
 		this.password = password;
+		this.userType = userType;
 	}
 
 	// Getter and setter method
@@ -38,18 +40,25 @@ public abstract class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getUserType() {
+		return userName;
+	}
+
+	public void setUserType(String userName) {
+		this.userName = userName;
+	}
 
 	@Override
 	public String toString() {
-		return "User [Name=" + name + ", Username=" + userName + "]";
+		return "User [Name=" + name + ", Username=" + userName + ", User Type=" + userType + "]";
 	}
 }
 
 // Admin class extending user class
 class Admin extends User {
 
-	public Admin(String name, String userName, String password) {
-		super(name, userName, password);
+	public Admin(String name, String userName, String password, String userType) {
+		super(name, userName, password, userType);
 	}
 
 	@Override
@@ -61,8 +70,8 @@ class Admin extends User {
 //Customer class extending user class
 class Customer extends User {
 
-	public Customer(String name, String userName, String password) {
-		super(name, userName, password);
+	public Customer(String name, String userName, String password, String userType) {
+		super(name, userName, password, userType);
 	}
 
 	@Override
