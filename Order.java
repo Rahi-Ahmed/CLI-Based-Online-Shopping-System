@@ -2,55 +2,67 @@ package OnlineShoppingSystem;
 
 import java.util.List;
 
+// Class representing an order in the online shopping system
 public class Order {
-	private int orderId;
-	private User customer;
-	private List<Product> products;
-	private String status;
+    
+    // Attributes of the order
+    private int orderId; // Unique ID for the order
+    private User customer; // Customer who placed the order
+    private List<Product> products; // List of products in the order
+    private String status; // Status of the order (e.g., "Pending", "Shipped", "Delivered")
 
-	public Order(int orderId, User customer, List<Product> products, String status) {
-		this.orderId = orderId;
-		this.customer = customer;
-		this.products = products;
-		this.status = status;
-	}
+    // Constructor to initialize order attributes
+    public Order(int orderId, User customer, List<Product> products, String status) {
+        this.orderId = orderId;
+        this.customer = customer;
+        this.products = products;
+        this.status = status;
+    }
 
-	// Getters and setters
-	public int getOrderId() {
-		return orderId;
-	}
+    // Getter method for order ID
+    public int getOrderId() {
+        return orderId;
+    }
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
+    // Setter method for order ID
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
-	public User getCustomer() {
-		return customer;
-	}
+    // Getter method for customer
+    public User getCustomer() {
+        return customer;
+    }
 
-	public void setCustomer(User customer) {
-		this.customer = customer;
-	}
+    // Setter method for customer
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
 
-	public List<Product> getProducts() {
-		return products;
-	}
+    // Getter method for products
+    public List<Product> getProducts() {
+        return products;
+    }
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
+    // Setter method for products
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    // Getter method for status
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    // Setter method for status
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	@Override
-	public String toString() {
-		return "Order [Order ID=" + orderId + ", Customer=" + customer + ", Products=" + products + ", Status=" + status
-				+ "]";
-	}
+    // Override the toString method to provide a string representation of the Order object
+    @Override
+    public String toString() {
+        return "Order [Order ID=" + orderId + ", Customer=" + customer + ", Products=" + products + ", Status=" + status
+                + "]";
+    }
 }
