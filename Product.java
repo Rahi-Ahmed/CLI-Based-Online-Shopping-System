@@ -1,64 +1,78 @@
 package OnlineShoppingSystem;
 
+// Class representing a product in the online shopping system
 public class Product {
 
-	private String productName;
-	private String productCategory;
-	private double productPrice;
-	private int productId;
-	private int stock; // New attribute for stock
+    // Attributes of the product
+    private String productName;
+    private String productCategory;
+    private double productPrice;
+    private int productId;
+    private int stock; // Attribute for stock quantity
 
-	public Product(String productName, String productCategory, double productPrice, int productId, int stock) {
-		this.productName = productName;
-		this.productCategory = productCategory;
-		this.productPrice = productPrice;
-		this.productId = productId;
-		this.stock = stock; // Initialize stock
-	}
+    // Constructor to initialize product attributes
+    public Product(String productName, String productCategory, double productPrice, int productId, int stock) {
+        this.productName = productName;
+        this.productCategory = productCategory;
+        this.productPrice = productPrice;
+        this.productId = productId;
+        this.stock = stock; // Initialize stock
+    }
 
-	public String getName() {
-		return productName;
-	}
+    // Getter method for product name
+    public String getName() {
+        return productName;
+    }
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    // Setter method for product name
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-	public String getProductCategory() {
-		return productCategory;
-	}
+    // Getter method for product category
+    public String getProductCategory() {
+        return productCategory;
+    }
 
-	public void setProductCategory(String productCategory) {
-		this.productCategory = productCategory;
-	}
+    // Setter method for product category
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
+    }
 
-	public double getProductPrice() {
-		return productPrice;
-	}
+    // Getter method for product price
+    public double getProductPrice() {
+        return productPrice;
+    }
 
-	public void setProductPrice(double productPrice) {
-		this.productPrice = productPrice;
-	}
+    // Setter method for product price
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
+    }
 
-	public int getProductId() {
-		return productId;
-	}
+    // Getter method for product ID
+    public int getProductId() {
+        return productId;
+    }
 
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
+    // Setter method for product ID
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
-	public int getStock() {
-		return stock;
-	}
+    // Getter method for stock quantity
+    public int getStock() {
+        return stock;
+    }
 
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
+    // Setter method for stock quantity
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
-	@Override
-	public String toString() {
-		return "Name: " + productName + ", Category: " + productCategory + ", Price: " + productPrice + ", Product ID: "
-				+ productId + ", Stock: " + stock;
-	}
+    // Override the toString method to provide a string representation of the Product object
+    @Override
+    public String toString() {
+        return "Name: " + productName + ", Category: " + productCategory + ", Price: " + productPrice + ", Product ID: "
+                + productId + ", Stock: " + stock;
+    }
 }
